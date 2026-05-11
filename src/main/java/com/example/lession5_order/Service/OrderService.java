@@ -41,4 +41,8 @@ public class OrderService {
         // repository.findAll(pageable) sẽ trả về đối tượng Page chứa dữ liệu và thông tin phân trang
         return or.findAll(pageable);
     }
+    //LS4 : truy vấn vip
+    public List<Order> getHighValueOrders() {
+        return or.findHighValueOrders();
+    }
 }

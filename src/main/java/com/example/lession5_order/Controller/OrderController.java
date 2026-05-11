@@ -43,4 +43,10 @@ public class OrderController {
 
         return ResponseEntity.ok(os.getOrdersPaged(page, size));
     }
+    // LS4: truy vấn báo cáo VIP
+    @GetMapping("/high-value")
+    public ResponseEntity<List<Order>> getHighValueOrders() {
+        List<Order> highValueOrders = os.getHighValueOrders();
+        return ResponseEntity.ok(highValueOrders);
+    }
 }

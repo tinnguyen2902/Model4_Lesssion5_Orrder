@@ -2,6 +2,7 @@ package com.example.lession5_order.repository;
 
 import com.example.lession5_order.Model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,5 +14,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     // Tìm theo tên khách hàng có chứa từ khóa (LIKE %name%)
     List<Order> findByCustomerNameContaining(String name);
-
+    //LS4 truy vấn vip
+    @Query("SELECT o FROM Order o WHERE o.totalPrice > (SELECT AVG(o2.totalPrice) FROM Order o2)")
+    List<Order> findHighValueOrders();
 }
