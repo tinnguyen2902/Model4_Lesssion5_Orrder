@@ -1,9 +1,13 @@
 package com.example.lession5_order.Controller;
 
-import com.example.lession5_order.Model.Order;
+import com.example.lession5_order.Model.DTO.OrderSummary;
+import com.example.lession5_order.Model.DTO.PaginationResponse;
+import com.example.lession5_order.Model.Entity.Order;
 import com.example.lession5_order.Service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,4 +53,14 @@ public class OrderController {
         List<Order> highValueOrders = os.getHighValueOrders();
         return ResponseEntity.ok(highValueOrders);
     }
+    //LS5
+    @GetMapping("/findAllAndSearch")
+    public ResponseEntity<PaginationResponse<OrderSummary>> findAllAndSearch(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(os.findAllAndPagination(pageable));
+    }
+
 }

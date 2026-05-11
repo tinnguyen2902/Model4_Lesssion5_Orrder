@@ -1,6 +1,8 @@
 package com.example.lession5_order.Service;
 
-import com.example.lession5_order.Model.Order;
+import com.example.lession5_order.Model.DTO.OrderSummary;
+import com.example.lession5_order.Model.DTO.PaginationResponse;
+import com.example.lession5_order.Model.Entity.Order;
 import com.example.lession5_order.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -45,4 +47,16 @@ public class OrderService {
     public List<Order> getHighValueOrders() {
         return or.findHighValueOrders();
     }
+    //LS5
+    public PaginationResponse<OrderSummary> findAllAndPagination(Pageable pageable) {
+        Page<OrderSummary> pageResult = or.findAllAndPagination(pageable);
+
+        return new PaginationResponse<>(
+                pageResult.getContent(),
+                pageResult.getTotalPages(),
+                pageResult.getTotalElements(),
+                pageResult.getNumber()
+        );
+    }
+
 }
