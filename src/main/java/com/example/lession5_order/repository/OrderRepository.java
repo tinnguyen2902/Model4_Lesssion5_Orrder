@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,4 +24,13 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     //LS5
     @Query("SELECT new com.example.lession5_order.Model.DTO.OrderSummary(o.orderCode, o.customerName, o.totalPrice) FROM Order o")
     Page<OrderSummary> findAllAndPagination(Pageable pageable);
+    //LS6
+    @Query("SELECT new com.example.lession5_order.Model.DTO.OrderSummary(o.orderCode, o.customerName, o.totalPrice) " +
+            "FROM Order o " +
+            "WHERE (:status IS NULL OR o.status = :status) " +
+            "AND (:minPrice IS NULL OR o.totalPrice >= :minPrice)")
+    Page<OrderSummary> filterOrders(
+            @Param("status") String status,
+            @Param("minPrice") Double minPrice,
+            Pageable pageable);
 }

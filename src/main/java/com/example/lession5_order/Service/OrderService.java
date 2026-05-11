@@ -58,5 +58,9 @@ public class OrderService {
                 pageResult.getNumber()
         );
     }
+    //LS6
+    public Page<OrderSummary> filterOrders(String status, Double minPrice, Pageable pageable) {
+        return or.filterOrders(status, minPrice, pageable);
+    }
 
 }
